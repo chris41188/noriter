@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "DataBase.h"
 #import "TableViewController.h"
-#import "ScrollViewController.h";
-#import "ScrollView.h";
+#import "ScrollViewController.h"
+#import "ScrollView.h"
 @interface DayViewController : UIViewController
 {
     TableViewController *TVC;

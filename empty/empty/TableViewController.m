@@ -8,10 +8,6 @@
 
 #import "TableViewController.h"
 
-@interface TableViewController ()
-
-@end
-
 @implementation TableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style

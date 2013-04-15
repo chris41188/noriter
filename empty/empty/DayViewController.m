@@ -52,6 +52,7 @@
             SV = (ScrollView*)childView;
         }
     }
+    
     [SVC setData:DB.array];
     SVC.TVC = TVC;
 }

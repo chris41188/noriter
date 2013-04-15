@@ -39,15 +39,15 @@
     {
         //NSLog(@"DataBaseInit");
         int i;
-        NSArray *title = [NSArray arrayWithObjects:@"놀기", @"먹기", @"싸기" ,nil];
+        NSArray *title = [NSArray arrayWithObjects:@"놀아보아요", @"밥먹장", @"싸기" ,nil];
         array = [[NSMutableArray alloc]init];
         
         for(i=0;i<24;)
         {
             int start = i;
-            int end = i+rand()%2+1;
+            int end = i+rand()%1+1;
             //NSLog([NSString stringWithFormat:@"%d %d %d",i,start,end]);
-            if ( rand()%2 == 0 || true ) // start
+            if ( rand()%3 < 2 )// || true ) // start
             {
                 NSString *str = [NSString stringWithString:[title objectAtIndex:rand()%[title count]]];
                 NSMutableArray *data = [NSMutableArray arrayWithObjects:str, [NSNumber numberWithInt:start], [NSNumber numberWithInt:end], nil];
