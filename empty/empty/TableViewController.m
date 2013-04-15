@@ -62,7 +62,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    NSLog(@"%d",indexPath.row);
+    //NSLog(@"%d",indexPath.row);
     NSArray *array =[data objectAtIndex:(indexPath.row)];
     
     cell.textLabel.text = [array objectAtIndex:0];
@@ -70,7 +70,10 @@
     
     return cell;
 }
-
+/*
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+        return nil;
+}*/
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -125,7 +128,7 @@
 -(void)setData:(NSMutableArray*)array
 {
     data = array;
-    NSLog(@"%@",data);
+    //NSLog(@"%@",data);
     [self.tableView reloadData];
 }
 @end

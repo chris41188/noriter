@@ -32,6 +32,7 @@
 		5FA6205F1713EFB900AF294A /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA6205E1713EFB900AF294A /* TableViewController.m */; };
 		5FA620621713F06500AF294A /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA620611713F06500AF294A /* DataBase.m */; };
 		5FA6206E1713F67600AF294A /* DayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA6206D1713F67600AF294A /* DayViewController.m */; };
+		5FE92C57171652A400CD2C2B /* ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE92C56171652A400CD2C2B /* ScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		5FA620611713F06500AF294A /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
 		5FA6206C1713F67600AF294A /* DayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayViewController.h; sourceTree = "<group>"; };
 		5FA6206D1713F67600AF294A /* DayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayViewController.m; sourceTree = "<group>"; };
+		5FE92C55171652A400CD2C2B /* ScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollView.h; sourceTree = "<group>"; };
+		5FE92C56171652A400CD2C2B /* ScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +154,8 @@
 				5FA6205B1713EFA600AF294A /* ScrollViewController.m */,
 				5FA6206C1713F67600AF294A /* DayViewController.h */,
 				5FA6206D1713F67600AF294A /* DayViewController.m */,
+				5FE92C55171652A400CD2C2B /* ScrollView.h */,
+				5FE92C56171652A400CD2C2B /* ScrollView.m */,
 				5F0BC0D9170D40DE004D1329 /* FirstViewController.h */,
 				5F0BC0DA170D40DE004D1329 /* FirstViewController.m */,
 				5F0BC0DC170D40DE004D1329 /* first.png */,
@@ -319,6 +324,7 @@
 				5FA6205F1713EFB900AF294A /* TableViewController.m in Sources */,
 				5FA620621713F06500AF294A /* DataBase.m in Sources */,
 				5FA6206E1713F67600AF294A /* DayViewController.m in Sources */,
+				5FE92C57171652A400CD2C2B /* ScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

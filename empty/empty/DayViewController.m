@@ -8,62 +8,61 @@
 //
 #import "DayViewController.h"
 
-@interface DayViewController ()
-
-@end
 
 @implementation DayViewController
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     DataBase *DB = [DataBase sharedDataBase];
-    NSLog(@"hi");
-    NSLog(@"DBinitFinish");
-    NSLog(@"getArrayFinish");
-    NSLog([NSString stringWithFormat:@"%d",[DB.array count]]);
-    NSLog(@"array:%@",DB.array);
+    //NSLog(@"hi");
+    //NSLog(@"DBinitFinish");
+    //NSLog(@"getArrayFinish");
+    //NSLog([NSString stringWithFormat:@"%d",[DB.array count]]);
+    //NSLog(@"array:%@",DB.array);
     int x = 5;
     int y = 10;
     x = x+y;
     
-    NSLog(@"%@",[self childViewControllers]);
+    //NSLog(@"%@",[self childViewControllers]);
     
     for(UIViewController *childViewController in [self childViewControllers])
     {
         if([childViewController isKindOfClass:[TableViewController class]])
         {
-            TBC =  (TableViewController*)childViewController;
+            TVC =  (TableViewController*)childViewController;
         }
         else if ([childViewController isKindOfClass:[ScrollViewController class]])
         {
             SVC = (ScrollViewController*)childViewController;
         }
     }
-    [TBC loadView];
-    [TBC setData:DB.array];
-    [SVC loadView];
+    [TVC loadView];
+    [TVC setData:DB.array];
+    
+    for(UIView *childView in self.view.subviews)
+    {
+        childView.userInteractionEnabled = YES;
+        //if([childView isKindOfClass:[ScrollView class]])
+        //{
+        // TBC =  (*)childViewController;
+        //}
+        if ([childView isKindOfClass:[ScrollView class]])
+        {
+            SV = (ScrollView*)childView;
+        }
+    }
     [SVC setData:DB.array];
-    
-    UITapGestureRecognizer *singleFingerTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(handleSingleTap:)];
-    [self.view addGestureRecognizer:singleFingerTap];
-    
+    SVC.TVC = TVC;
 }
-
+- (BOOL) gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch *)touch;
+{
+    return (touch.view == self.view);
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//The event handling method
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer {
-    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
-    
-    //Do stuff here...
-    NSLog(@"%f, %f",(float)location.x,(float)location.y);
-}
+
 @end

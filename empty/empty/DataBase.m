@@ -13,25 +13,14 @@
 + (DataBase *)sharedDataBase
 
 {
-    
     static DataBase *dataBase = nil;
-    
-    
-    
     if(dataBase == nil)
-        
     {
-        
         @synchronized(self)
-        
         {
-            
             if(dataBase == nil)
-                
             {
-                
                 dataBase = [[self alloc] init];
-                
             }
             
         }
@@ -48,7 +37,7 @@
 {
     if(self = [super init])
     {
-        NSLog(@"DataBaseInit");
+        //NSLog(@"DataBaseInit");
         int i;
         NSArray *title = [NSArray arrayWithObjects:@"놀기", @"먹기", @"싸기" ,nil];
         array = [[NSMutableArray alloc]init];
@@ -56,9 +45,9 @@
         for(i=0;i<24;)
         {
             int start = i;
-            int end = i+rand()%3+1;
-            NSLog([NSString stringWithFormat:@"%d %d %d",i,start,end]);
-            if ( rand()%2 == 0 ) // start
+            int end = i+rand()%2+1;
+            //NSLog([NSString stringWithFormat:@"%d %d %d",i,start,end]);
+            if ( rand()%2 == 0 || true ) // start
             {
                 NSString *str = [NSString stringWithString:[title objectAtIndex:rand()%[title count]]];
                 NSMutableArray *data = [NSMutableArray arrayWithObjects:str, [NSNumber numberWithInt:start], [NSNumber numberWithInt:end], nil];

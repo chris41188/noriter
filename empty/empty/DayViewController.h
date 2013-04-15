@@ -10,10 +10,12 @@
 #import "DataBase.h"
 #import "TableViewController.h"
 #import "ScrollViewController.h";
+#import "ScrollView.h";
 @interface DayViewController : UIViewController
 {
-    TableViewController *TBC;
+    TableViewController *TVC;
     ScrollViewController *SVC;
+    ScrollView *SV;
 }
 @end
 

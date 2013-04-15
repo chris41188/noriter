@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-
-@interface ScrollViewController : UIViewController
+#import "ScrollView.h";
+#import "TableViewController.h";
+@interface ScrollViewController : UIViewController<UIGestureRecognizerDelegate>
 {
     NSMutableArray *data;
+    TableViewController* TVC;
+    ScrollView *SV;
+    
 }
+@property (strong,nonatomic) TableViewController *TVC;
 -(void)setData:(NSMutableArray*)array;
 -(void)clear;
-//- (void)drawRect:(CGRect)rect;
+- (IBAction)handleTap:(UITapGestureRecognizer *)TapGesture;
 @end

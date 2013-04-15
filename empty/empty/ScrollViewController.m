@@ -8,20 +8,32 @@
 
 #import "ScrollViewController.h"
 
-@interface ScrollViewController ()
-
-@end
-
 @implementation ScrollViewController
-
+@synthesize TVC;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    
+    SV = self.view;
 }
+- (IBAction)handleTap:(UITapGestureRecognizer *)TapGesture
+{
+    NSLog(@"TAP - TVC's view = %@ , size = %0f, %0f",TVC.tableView,TVC.view.bounds.size.width,TVC.view.bounds.size.height);
+    //TVC.view.frame = TVC.view.bounds.size;
+    CGPoint tapPoint = [TapGesture locationInView:self.view];
+    int tableRow = [SV tapTest:tapPoint];
+    if(tableRow != -1)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:tableRow inSection:0];
+        [TVC.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [TVC.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    }
 
+}
+- (BOOL) gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch *)touch;
+{
+    return YES;//(touch.view == self.view);
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -30,32 +42,16 @@
 -(void)setData:(NSMutableArray*)array
 {
     data = array;
-    NSLog(@"%@",data);
+    [(ScrollView*)self.view setData:data];
+    //NSLog(@"%@",data);
     [self clear];
     [self draw];
 }
 -(void)draw
 {
-    for (NSArray *array in data) {
-        int start = [[array objectAtIndex:1] integerValue];
-        int end = [[array objectAtIndex:2] integerValue];
-        float relStart = start * self.view.bounds.size.height / 24 - self.view.bounds.origin.y;
-        float relEnd = end * self.view.bounds.size.height / 24 - self.view.bounds.origin.y;
-        NSLog(@"%f -> %f",relStart,relEnd-relStart);
-        [self drawRect:CGRectMake(0, relStart, self.view.frame.size.width, relEnd-relStart)];
-    }
+   
 }
 -(void)clear
 {
-//    [self.view ]
 }
--(void) drawRect:(CGRect)rect{
-    UIView *subview =[[UIView alloc] initWithFrame:rect];
-    [subview setBackgroundColor:[UIColor blueColor]];
-    subview.layer.borderColor = [UIColor redColor].CGColor;
-    subview.layer.borderWidth = 1.0f;
-    [self.view addSubview: subview];
-    
-}
-
 @end
