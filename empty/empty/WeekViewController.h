@@ -1,8 +1,8 @@
 //
-//  DayViewController.h
+//  WeekViewController.h
 //  empty
 //
-//  Created by echo on 13. 4. 9..
+//  Created by echo on 13. 4. 16..
 //  Copyright (c) 2013년 echo. All rights reserved.
 //
 
@@ -10,11 +10,10 @@
 #import "DataBase.h"
 #import "TableViewController.h"
 #import "ScrollViewController.h"
-#import "ScrollView.h"
-@interface DayViewController : UIViewController
+@interface WeekViewController : UIViewController
 {
+    DataBase *DB;
+    NSMutableArray *arrSVC;
     TableViewController *TVC;
-    ScrollViewController *SVC;
 }
 @end
-
