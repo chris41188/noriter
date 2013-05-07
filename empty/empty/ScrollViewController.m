@@ -107,15 +107,17 @@
     // Configure the cell...
     if(indexPath.row%2 == 1)
     {
-        CellIdentifier = @"Work";
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        //CellIdentifier = @"Work";
+        //cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell = [[UITableViewCell alloc]init];
         cell.textLabel.text = [[data objectAtIndex:(indexPath.row-1)/2] objectAtIndex:0];
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
     }
     else
     {
-        CellIdentifier = @"Rest";
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//        CellIdentifier = @"Rest";
+//        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell = [[UITableViewCell alloc]init];
         [cell setBackgroundColor:[UIColor colorWithRed:1 green:.8 blue:.8 alpha:1]];
     }
     
@@ -137,5 +139,15 @@
 -(void)setData:(NSMutableArray*)array
 {
     data = array;
+}
+
++(ScrollViewController*)makeChildSVC:(UIViewController *)parent frame:(CGRect)rect
+{
+    ScrollViewController *SVC = [[ScrollViewController alloc] initWithStyle:UITableViewStylePlain];
+    [parent addChildViewController:SVC];
+    [parent.view addSubview:SVC.view];
+    SVC.view.frame = rect;
+    [SVC didMoveToParentViewController:parent];
+    return SVC;
 }
 @end

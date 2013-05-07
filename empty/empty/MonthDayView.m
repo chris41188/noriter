@@ -28,9 +28,9 @@
     }
     return self;
 }
+
 - (void)gesturePiece:(UIGestureRecognizer *)gestureRecognizer
 {
-    //[self co /// 부모인 Controller를 어떻게 찾지?]
     MonthViewController *_MVC = (MonthViewController*)MVC;
     NSLog(@"hi");
     [_MVC expandRow:row Col:col];

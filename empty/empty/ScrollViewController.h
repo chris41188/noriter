@@ -16,6 +16,7 @@
     int rowCount;
 }
 @property (strong,nonatomic) TableViewController *TVC;
++(ScrollViewController*)makeChildSVC:(UIViewController*)parent frame:(CGRect)rect;
 -(void)setData:(NSMutableArray*)array;
 -(NSInteger)hitTest:(CGPoint)point;
 @end

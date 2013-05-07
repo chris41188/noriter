@@ -15,6 +15,7 @@
 {
     TableViewController *TVC;
     ScrollViewController *SVC;
+    DataBase *DB;
 }
 @end
 

@@ -9,7 +9,7 @@
 #import "TableViewController.h"
 
 @implementation TableViewController
-
+@synthesize data;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -45,13 +45,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    NSLog(@"%d",[data count]);
     return [data count];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [[UITableViewCell alloc]init];//[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     NSArray *array =[data objectAtIndex:(indexPath.row)];
@@ -62,6 +64,15 @@
     return cell;
 }
 
++(TableViewController*)makeChildTVC:(UIViewController*)parent frame:(CGRect)rect
+{
+    TableViewController *TVC = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
+    [parent addChildViewController:TVC];
+    [parent.view addSubview:TVC.view];
+    TVC.view.frame = rect;
+    [TVC didMoveToParentViewController:parent];
+    return TVC;
+}
 -(void)setData:(NSMutableArray*)array
 {
     data = array;

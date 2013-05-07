@@ -7,17 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MonthDayViewController.h"
 #import "MonthDayView.h"
 #import "DataBase.h"
+#import "TableViewController.h"
 @interface MonthViewController : UIViewController
 {
     DataBase *DB;
     NSMutableArray *arrMDVC;
     NSMutableArray *arrMDV;
-    NSInteger intActioning;
+    NSInteger  intActioning;
     NSInteger preCol,preRow;
     BOOL isOpen;
+    TableViewController *TVC;
+    NSDateComponents * now;
 }
 -(void)expandRow:(int)row Col:(int)col;
 @end

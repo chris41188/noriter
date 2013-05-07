@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface TableViewController : UITableViewController
+@interface TableViewController : UITableViewController <UITableViewDelegate>
 {
     NSMutableArray *data;
 }
 -(void)setData:(NSMutableArray*)array;
++(TableViewController*)makeChildTVC:(UIViewController*)parent frame:(CGRect)rect;
+@property (strong, nonatomic) NSMutableArray *data;
 @end
