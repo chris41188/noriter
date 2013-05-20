@@ -11,6 +11,7 @@
 
 @implementation ScrollViewController
 @synthesize TVC;
+@synthesize DB;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -41,7 +42,7 @@
 {
     UIView *piece = [gestureRecognizer view];
     CGPoint coord = [gestureRecognizer locationInView:[piece superview]];
-    [TVC setData:data];
+    [TVC setDataWithMonth:month Day:day];
     int tableRow = [self hitTest:coord];
     if(tableRow != -1)
     {
@@ -53,9 +54,9 @@
 -(NSInteger)hitTest:(CGPoint)point
 {
     int i=0;
-    for (NSArray *array in data) {
-        if([[array objectAtIndex:1] integerValue] * self.view.frame.size.height / 24 <= point.y
-           && [[array objectAtIndex:2] integerValue] * self.view.frame.size.height / 24 >= point.y)
+    for (Schedule* sche in [DB getSchedulesWithMonth:month Day:day]) {
+        if(sche.dc_StartDateComp.hour * self.view.frame.size.height / 24 <= point.y
+           && sche.dc_EndDateComp.hour * self.view.frame.size.height / 24 >= point.y)
         {
             return i;
         }
@@ -79,7 +80,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return rowCount = [data count]*2+1;
+    return rowCount = [DB getSchedulesWithMonth:month Day:day].count*2+1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -87,43 +88,38 @@
     float result = 0;
     if(row == 0)
     {
-        result = abs( [[[data objectAtIndex:0] objectAtIndex:1] integerValue] ) * self.view.frame.size.height / 24;
+        result = [DB getScheduleWithMonth:month Day:day Index:0].dc_StartDateComp.hour * self.view.frame.size.height / 24;
         
     }
     else if(row == rowCount-1) // not max - last one is not 24hour
     {
-        result = abs( [[[data objectAtIndex:[data count]-1] objectAtIndex:2] integerValue] - 24 ) * self.view.frame.size.height / 24;
+        result = abs( [DB getScheduleWithMonth:month Day:day Index:[[DB getSchedulesWithMonth:month Day:day] count]-1].dc_EndDateComp.hour - 24 ) * self.view.frame.size.height / 24;
     }
     else
     {
-        result = abs( [[[data objectAtIndex:(row-1)/2] objectAtIndex:2] integerValue] - [[[data objectAtIndex:row/2] objectAtIndex:1] integerValue] ) * self.view.frame.size.height / 24;
+        result = abs( [DB getScheduleWithMonth:month Day:day Index:(row-1)/2].dc_EndDateComp.hour - [DB getScheduleWithMonth:month Day:day Index:row/2].dc_StartDateComp.hour ) * self.view.frame.size.height / 24;
     }
     return result;
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (TableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier;
-    UITableViewCell *cell;
+    TableCell *cell;
     // Configure the cell...
     if(indexPath.row%2 == 1)
     {
-        //CellIdentifier = @"Work";
-        //cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell = [[UITableViewCell alloc]init];
-        cell.textLabel.text = [[data objectAtIndex:(indexPath.row-1)/2] objectAtIndex:0];
+        cell = [[TableCell alloc]init];
+        cell.schedule = [DB getScheduleWithMonth:month Day:day Index:(indexPath.row-1)/2];
+        cell.textLabel.text = cell.schedule.s_Content;
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:10];
     }
     else
     {
-//        CellIdentifier = @"Rest";
-//        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell = [[UITableViewCell alloc]init];
+        cell = [[TableCell alloc]init];
         [cell setBackgroundColor:[UIColor colorWithRed:1 green:.8 blue:.8 alpha:1]];
-    }
-    
+    }    
     return cell;
 }
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(TableCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row%2 == 1)
     {
@@ -136,18 +132,21 @@
     
 }
 
--(void)setData:(NSMutableArray*)array
+-(void)setDataWithMonth:(NSInteger)_month Day:(NSInteger)_day
 {
-    data = array;
+    month = _month;
+    day = _day;
+    [self.tableView reloadData];
 }
 
-+(ScrollViewController*)makeChildSVC:(UIViewController *)parent frame:(CGRect)rect
++(ScrollViewController*)makeChildSVCByParent:(UIViewController *)parent DB:(DataBase*)_DB frame:(CGRect)rect
 {
     ScrollViewController *SVC = [[ScrollViewController alloc] initWithStyle:UITableViewStylePlain];
     [parent addChildViewController:SVC];
     [parent.view addSubview:SVC.view];
     SVC.view.frame = rect;
     [SVC didMoveToParentViewController:parent];
+    SVC.DB = _DB;
     return SVC;
 }
 @end

@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataBase.h"
 #import "TableViewController.h"
 #import "ScrollViewController.h"
+#import "DataBase.h"
 @interface WeekViewController : UIViewController
 {
     DataBase *DB;
     NSMutableArray *arrSVC;
     TableViewController *TVC;
+    NSDateComponents *nowDateComps;
 }
+@property (nonatomic, strong)TableViewController *TVC;
+@property (nonatomic, strong)DataBase *DB;
+-(id)initWithDB:(DataBase*)_DB Frame:(CGRect)frame;
+-(void)setDateWithMonth:(int)month Day:(int)day;
 @end

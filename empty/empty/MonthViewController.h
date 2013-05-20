@@ -19,7 +19,11 @@
     NSInteger preCol,preRow;
     BOOL isOpen;
     TableViewController *TVC;
-    NSDateComponents * now;
+    NSDateComponents *nowDateComps;
 }
+@property (nonatomic, strong)TableViewController *TVC;
+@property (nonatomic, strong)DataBase *DB;
+-(id)initWithDB:(DataBase*)_DB Frame:(CGRect)frame;
+-(void)setDateWithMonth:(int)month;
 -(void)expandRow:(int)row Col:(int)col;
 @end

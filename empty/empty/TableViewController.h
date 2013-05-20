@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataBase.h"
+#import "TableCell.h"
+#import "DetailViewController.h"
+#import "NavigationController.h"
+@protocol ChildViewControllerDelegate <NSObject>
+- (void)ChangeViewControllwerWithDetailVC:(DetailViewController*)_DetailVC;
+@end
 @interface TableViewController : UITableViewController <UITableViewDelegate>
 {
-    NSMutableArray *data;
+    DataBase *DB;
+    NSInteger month, day;
 }
--(void)setData:(NSMutableArray*)array;
-+(TableViewController*)makeChildTVC:(UIViewController*)parent frame:(CGRect)rect;
-@property (strong, nonatomic) NSMutableArray *data;
+@property (assign) id <ChildViewControllerDelegate> delegate;
+@property (nonatomic, strong)DataBase *DB;
+-(void)setDataWithMonth:(NSInteger)_month Day:(NSInteger)_day;
++(TableViewController*)makeChildTVCByParent:(UIViewController*)parent DB:(DataBase*)_DB frame:(CGRect)rect;
 @end

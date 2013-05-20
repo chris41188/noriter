@@ -9,7 +9,7 @@
 #import "DataBase.h"
 
 @implementation DataBase
-
+/*
 + (DataBase *)sharedDataBase
 
 {
@@ -28,15 +28,20 @@
     }
     return dataBase;
     
-}
+}*/
+@synthesize title;
+@synthesize owner;
 @synthesize array;
--(id)init
+-(id)init //random
 {
     if(self = [super init])
     {
-        //NSLog(@"DataBaseInit");
+
+        
+        NSLog(@"Data Base Init");
         int i,l,o,C;
-        NSArray *title = [NSArray arrayWithObjects:@"놀아보아요", @"밥먹장", @"싸기" ,nil];
+        title = @"NamSE의 IOS";
+        NSArray *content = [NSArray arrayWithObjects:@"밥먹겠습니다. 밥먹을거에요 밥먹자 밥 그래 밥밥밥 바라밥바 밥밥! 바라발바ㅏ바바밥 \n바바바르아르베밥 디너 브레이크퍼스트 런치! 야 씩 은 치 킨!!", @"오늘은\n    회사에\n       가는날    ! @ ! *&^$#@", @"잠잘겁니다. 오늘 잘게요. 잘자요 사요나라 ^^" ,nil];
         array = [[NSMutableArray alloc]init];
         
         //MockData
@@ -54,12 +59,70 @@
                 for(o=0;o<24;)
                 {
                     int start = o;
-                    int end = o+rand()%1+1;
+                    int end = o+rand()%3+1;
                     if ( rand()%3 < 2 )// || true ) // start
                     {
-                        NSString *str = [NSString stringWithString:[title objectAtIndex:rand()%[title count]]];
-                        NSMutableArray *event = [NSMutableArray arrayWithObjects:str, [NSNumber numberWithInt:start], [NSNumber numberWithInt:end], nil];
-                        [Day addObject:event];
+                        Schedule *schedule = [[Schedule alloc] init];
+                        
+                        schedule.dc_StartDateComp = [[NSDateComponents alloc]init];
+                        schedule.dc_StartDateComp.year = 2013;
+                        schedule.dc_StartDateComp.month = i;
+                        schedule.dc_StartDateComp.day = l;
+                        schedule.dc_StartDateComp.hour = start;
+                        schedule.dc_StartDateComp.minute = 0;
+                        
+                        schedule.dc_EndDateComp = [[NSDateComponents alloc]init];
+                        schedule.dc_EndDateComp.year = 2013;
+                        schedule.dc_EndDateComp.month = i;
+                        schedule.dc_EndDateComp.day = l;
+                        schedule.dc_EndDateComp.hour = end;
+                        schedule.dc_EndDateComp.minute = 0;
+                        
+                        if( rand()%2 == 0)
+                        {
+                            schedule.i_Picture = [UIImage imageNamed:@"Diet.jpg"];
+                            schedule.s_Content = [content objectAtIndex:0];
+                            schedule.s_Address = @"식당";
+                        }
+                        else if( rand()%2 == 0)
+                        {
+                            schedule.i_Picture = [UIImage imageNamed:@"Company.jpg"];
+                            schedule.s_Content = [content objectAtIndex:1];
+                            schedule.s_Address = @"회사";
+                        }
+                        else
+                        {
+                            schedule.i_Picture = [UIImage imageNamed:@"Sleep.jpg"];
+                            schedule.s_Content = [content objectAtIndex:2];
+                            schedule.s_Address = @"집";
+                        }
+                        
+                        schedule.ma_Comment = [[NSMutableArray alloc] init];
+                        schedule.ma_Share = [[NSMutableArray alloc] init];
+                        schedule.f_Latitude = (double)arc4random() / 0x100000000 * 180.0 - 90.0;
+                        schedule.f_Longitude = (double)arc4random() / 0x100000000 * 360.0 - 180.0;
+                        schedule.p_Writter = owner;
+                        
+                        int p, r=rand()%5;
+                        for(p=0; p<r; p++)
+                        {
+                            Comment* _comment = [[Comment alloc]init];
+                            _comment.writter = owner;
+                            _comment.content = [content objectAtIndex:rand()%3];
+                            _comment.uploadDate = [[NSDateComponents alloc]init];
+                            _comment.uploadDate.year = 2013;
+                            _comment.uploadDate.month = rand()%12+1;
+                            _comment.uploadDate.day = rand()%29+1;
+                            _comment.uploadDate.hour = rand()%25;
+                            _comment.uploadDate.minute = rand()%60;
+                            [schedule.ma_Comment addObject:_comment];
+                        } 
+                        
+                        //if( rand()%2 == 0 ) schedule.p_Writter = Namse;
+                        //else if( rand()%2 == 0 ) schedule.p_Writter = Minhwa;
+                        //else schedule.p_Writter = Yenarae;
+                        
+                        [Day addObject:schedule];
                     }
                     o=end;
                 }
@@ -67,10 +130,23 @@
             }
             [array addObject:Month];
         }
-        
-        //array = [NSMutableArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
-        return self;
     }
+    return self;
+}
+-(NSArray*)getSchedulesWithMonth:(NSInteger)month
+{
+    if(month <= 0) return nil;
+    return [array objectAtIndex:month-1];
+}
+-(NSArray*)getSchedulesWithMonth:(NSInteger)month Day:(NSInteger)day
+{
+    if(day <= 0) return nil;
+    return [[self getSchedulesWithMonth:month] objectAtIndex:day-1];
+}
+-(Schedule*)getScheduleWithMonth:(NSInteger)month Day:(NSInteger)day Index:(NSInteger)index
+{
+    if(index < 0) return nil;
+    return [[self getSchedulesWithMonth:month Day:day] objectAtIndex:index];
 }
 -(void)print{
     NSLog(@"HIHIHI");

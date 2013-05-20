@@ -9,7 +9,7 @@
 #import "TableViewController.h"
 
 @implementation TableViewController
-@synthesize data;
+@synthesize DB;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -29,6 +29,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
+{
+    DetailViewController *DetailVC = [[DetailViewController alloc]initWithSchedule:[DB getScheduleWithMonth:month Day:day Index:indexPath.row]];
+    [self.delegate ChangeViewControllwerWithDetailVC:DetailVC];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -45,37 +50,35 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    NSLog(@"%d",[data count]);
-    return [data count];
+    return [DB getSchedulesWithMonth:month Day:day].count;
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (TableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [[UITableViewCell alloc]init];//[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    TableCell *cell = [[TableCell alloc]init];
     
     // Configure the cell...
-    NSArray *array =[data objectAtIndex:(indexPath.row)];
-    
-    cell.textLabel.text = [array objectAtIndex:0];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ -> %@",[array objectAtIndex:1],[array objectAtIndex:2]];
+    cell.schedule = [DB getScheduleWithMonth:month Day:day Index:indexPath.row];
+    cell.textLabel.text = cell.schedule.s_Content;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d시 -> %d시",cell.schedule.dc_StartDateComp.hour,cell.schedule.dc_EndDateComp.hour];
     
     return cell;
 }
 
-+(TableViewController*)makeChildTVC:(UIViewController*)parent frame:(CGRect)rect
++(TableViewController*)makeChildTVCByParent:(UIViewController*)parent DB:(DataBase*)_DB frame:(CGRect)rect
 {
     TableViewController *TVC = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
     [parent addChildViewController:TVC];
     [parent.view addSubview:TVC.view];
     TVC.view.frame = rect;
     [TVC didMoveToParentViewController:parent];
+    TVC.DB = _DB;
     return TVC;
 }
--(void)setData:(NSMutableArray*)array
+-(void)setDataWithMonth:(NSInteger)_month Day:(NSInteger)_day
 {
-    data = array;
+    month = _month, day = _day;
     [self.tableView reloadData];
 }
 @end

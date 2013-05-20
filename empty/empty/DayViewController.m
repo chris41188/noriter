@@ -10,6 +10,8 @@
 
 
 @implementation DayViewController
+@synthesize DB;
+@synthesize TVC;
 #define TVC_W_P 0.9
 #define SVC_W_P 0.1
 #define TVC_H_P 1
@@ -24,18 +26,43 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    DB = [DataBase sharedDataBase];
+}
+-(id)initWithDB:(DataBase *)_DB Frame:(CGRect)frame
+{
+    self = [super init];
+    if(self)
+    {
+        DB = _DB;
+        self.view.frame = frame;
+        
+        dateComps = [[NSDateComponents alloc]init];
+        [dateComps setYear:2013];
+        [dateComps setDay:1];
+        [dateComps setMonth:1];
+        [dateComps setWeek:1];
+        TVC = [TableViewController makeChildTVCByParent:self DB:DB frame:CGRectMake(0, 0, TVC_W, TVC_H)];
+        
+        SVC = [ScrollViewController makeChildSVCByParent:self DB:DB frame:CGRectMake(STD_W-SVC_W, 0, SVC_W, SVC_H)];
+        SVC.TVC = TVC;
+        
+        [self setDateWithMonth:[dateComps month] Day:[dateComps day]];
+    }
+    return self;
+}
+-(void)setDateWithMonth:(int)month Day:(int)day
+{
+    [dateComps setMonth:month];
+    [dateComps setDay:day];
+    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:dateComps];
+    dateComps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit fromDate:date];
+    
+    [SVC setDataWithMonth:[dateComps month] Day:[dateComps day]];
+    [TVC setDataWithMonth:[dateComps month] Day:[dateComps day]];
+    
 }
 -(void)viewDidLayoutSubviews
 {
-    NSDateComponents * now = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[NSDate date]];
     
-    TVC = [TableViewController makeChildTVC:self frame:CGRectMake(0, 0, TVC_W, TVC_H)];
-    [TVC setData:[[DB.array objectAtIndex:[now month]-1 ] objectAtIndex:[now day]-1]];
-    
-    SVC = [ScrollViewController makeChildSVC:SVC frame:CGRectMake(STD_W-SVC_W, 0, SVC_W, SVC_H)];
-    [SVC setData:[[DB.array objectAtIndex:[now month]-1 ] objectAtIndex:[now day]-1]];
-    SVC.TVC = TVC;
     
 }
 - (void)didReceiveMemoryWarning

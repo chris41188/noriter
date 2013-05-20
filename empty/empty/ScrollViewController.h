@@ -8,15 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "TableViewController.h"
-
+#import "DataBase.h"
+#import "TableCell.h"
 @interface ScrollViewController : UITableViewController
 {
-    NSMutableArray *data;
+    DataBase *DB;
     TableViewController* TVC;
     int rowCount;
+    NSInteger month, day;
 }
 @property (strong,nonatomic) TableViewController *TVC;
-+(ScrollViewController*)makeChildSVC:(UIViewController*)parent frame:(CGRect)rect;
--(void)setData:(NSMutableArray*)array;
+@property (strong,nonatomic) DataBase* DB;
++(ScrollViewController*)makeChildSVCByParent:(UIViewController*)parent DB:(DataBase*)_DB frame:(CGRect)rect;
+-(void)setDataWithMonth:(NSInteger)_month Day:(NSInteger)_day;
 -(NSInteger)hitTest:(CGPoint)point;
 @end

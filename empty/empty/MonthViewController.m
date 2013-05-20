@@ -10,65 +10,96 @@
 
 
 @implementation MonthViewController
+@synthesize TVC;
+@synthesize DB;
 #define sh self.view.frame.size.height/6*3
 #define h_n self.view.frame.size.height/6
 #define w_n self.view.frame.size.width/7
 
-
+-(id)initWithDB:(DataBase*)_DB Frame:(CGRect)frame
+{
+    self = [super init];
+    if(self)
+    {
+        DB = _DB;
+        self.view.frame = frame;
+        nowDateComps = [[NSDateComponents alloc]init];
+        [nowDateComps setYear:2013];
+        [nowDateComps setDay:1];
+        [nowDateComps setMonth:1];
+        
+        TVC = [TableViewController makeChildTVCByParent:self DB:DB frame:self.view.frame];
+        
+        [TVC.view setHidden:YES];
+        arrMDVC = [[NSMutableArray alloc]init];
+        arrMDV = [[NSMutableArray alloc]init];
+        intActioning = 0;
+        isOpen = false;
+        int i=0,l=0;
+        self.view.clipsToBounds = YES;
+        for(i=0;i<6;i++)
+        {
+            for(l=0;l<7;l++)
+            {
+                MonthDayView* MDV = [[MonthDayView alloc] init];
+                MDV.frame = CGRectMake(l*w_n, i*h_n, w_n, h_n);
+                [arrMDV addObject:MDV];
+                [self.view addSubview:MDV];
+                [MDV setRow:i];
+                [MDV setCol:l];
+                
+                [MDV setMVC:self];
+                
+            }
+        }
+        [self setDateWithMonth:[nowDateComps month]];
+    }
+    return self;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
-    TVC = [TableViewController makeChildTVC:self frame:self.view.frame];
-    
-    [TVC.view setHidden:YES];
-    NSLog(@"in view did appear TVC view is %@",TVC.view);
-    DB = [DataBase sharedDataBase];
-    arrMDVC = [[NSMutableArray alloc]init];
-    arrMDV = [[NSMutableArray alloc]init];
+
+}
+-(void)setDateWithMonth:(int)month
+{
     intActioning = 0;
     isOpen = false;
     int i=0,l=0;
-    now = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[NSDate date]];
-    [now setDay:1];
-    self.view.clipsToBounds = YES;
-
+    [nowDateComps setMonth:month];
+    NSDate *date = [[NSCalendar currentCalendar] dateFromComponents:nowDateComps];
+    nowDateComps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit fromDate:date];
+    
     for(i=0;i<6;i++)
     {
         for(l=0;l<7;l++)
         {
-            MonthDayView* MDV = [[MonthDayView alloc] init];
-            MDV.frame = CGRectMake(l*w_n, i*h_n, w_n, h_n);
-            [arrMDV addObject:MDV];
-            [self.view addSubview:MDV];
-            [MDV setRow:i];
-            [MDV setCol:l];
+            MonthDayView* MDV = [arrMDV objectAtIndex:i*7+l];
             
-            NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-            [offsetComponents setDay:-[now weekday]+1+i*7+l];
-            NSDateComponents *dateComponent = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[[NSCalendar currentCalendar] dateByAddingComponents:offsetComponents toDate:[[NSCalendar currentCalendar] dateFromComponents:now] options:0]];
+            NSDateComponents *offsetComps = [[NSDateComponents alloc] init];
+            [offsetComps setDay:-[nowDateComps weekday]+1+i*7+l];
+            NSDateComponents *dateComps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[[NSCalendar currentCalendar] dateByAddingComponents:offsetComps toDate:[[NSCalendar currentCalendar] dateFromComponents:nowDateComps] options:0]];
             
-            [MDV.label setText:[NSString stringWithFormat:@"%d/%d",[dateComponent month],[dateComponent day]]];
-            [MDV setMVC:self];
+            [MDV.label setText:[NSString stringWithFormat:@"%d/%d",[dateComps month],[dateComps day]]];
             
         }
     }
 }
 -(void)expandRow:(int)row Col:(int)col
 {
-    NSLog(@"%@",self.view);
-    NSLog(@"%d , %d %d %d",row,col,isOpen,intActioning);
+    NSLog(@"MonthDay touched row : %d / col : %d. \nisopen : %d , intActioning : %d",row,col,isOpen,intActioning);
     int i,l;    
     if(isOpen == false && intActioning == 0) // it's mean, in this time will open.
     {
         preCol = col, preRow = row;
         isOpen = true;
-        NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-        [offsetComponents setDay:-[now weekday]+1+row*7+col];
-        NSDateComponents *dateComponent = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[[NSCalendar currentCalendar] dateByAddingComponents:offsetComponents toDate:[[NSCalendar currentCalendar] dateFromComponents:now] options:0]];
-        [TVC setData:[[DB.array objectAtIndex:[dateComponent month]-1] objectAtIndex:[dateComponent day]-1]];
+        NSDateComponents *offsetComps = [[NSDateComponents alloc] init];
+        [offsetComps setDay:-[nowDateComps weekday]+1+row*7+col];
+        NSDateComponents *dateCompt = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[[NSCalendar currentCalendar] dateByAddingComponents:offsetComps toDate:[[NSCalendar currentCalendar] dateFromComponents:nowDateComps] options:0]];
+        [TVC setDataWithMonth:[dateCompt month] Day:[dateCompt day]];
         [TVC.view setHidden:NO];
         
         //up//

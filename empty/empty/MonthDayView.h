@@ -15,11 +15,12 @@
     NSMutableArray *data;
     NSInteger row;
     NSInteger col;
+    UILabel *label;
     id MVC;
 }
 @property (nonatomic, strong) id MVC;
 -(void)setData:(NSMutableArray*)array;
 @property NSInteger row;
 @property NSInteger col;
-@property (nonatomic,strong) IBOutlet UILabel *label;
+@property (nonatomic, strong) UILabel* label;
 @end

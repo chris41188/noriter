@@ -9,6 +9,7 @@
 #import "MonthDayView.h"
 
 @implementation MonthDayView
+@synthesize label;
 @synthesize col;
 @synthesize row;
 @synthesize MVC;
@@ -20,19 +21,29 @@
         
         self.layer.borderColor = [UIColor redColor].CGColor;
         self.layer.borderWidth = 1.0f;
-        
+        self.layer.backgroundColor = [UIColor whiteColor].CGColor;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesturePiece:)];
         [tapGesture setNumberOfTapsRequired:1];
         [self addGestureRecognizer:tapGesture];
-        //라벨추가시키기
+        
+        label = [[UILabel alloc] init];
+        label.frame = CGRectMake(0, 0, 30, 30);
+        label.numberOfLines=0;
+        //label.lineBreakMode=UILineBreakModeCharacterWrap;
+        label.textColor=[UIColor blackColor];
+        label.text = @"hi";
+        [self addSubview:label];
     }
     return self;
 }
-
+-(void)setData:(NSMutableArray *)array
+{
+    
+}
 - (void)gesturePiece:(UIGestureRecognizer *)gestureRecognizer
 {
     MonthViewController *_MVC = (MonthViewController*)MVC;
-    NSLog(@"hi");
+    NSLog(@"Month Day Touched");
     [_MVC expandRow:row Col:col];
 }
 

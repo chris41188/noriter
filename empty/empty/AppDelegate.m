@@ -12,7 +12,30 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [GMSServices provideAPIKey:@"AIzaSyA_bMr43CvaHdUg0hDwX9-sq6CrHU74W9A"];
+    /*
+    Person *Namse = [[Person alloc]init];
+    Namse.s_ID = @"skatpgus";
+    Namse.s_Name = @"남세현";
+    Namse.i_Picture = [UIImage imageNamed:@"Namse.jpg"];
+     
+    Person *Minhwa = [[Person alloc]init];
+    Minhwa.s_ID = @"rlaalsghk";
+    Minhwa.s_Name = @"김민화";
+    Minhwa.i_Picture = [UIImage imageNamed:@"Minhwa.jpg"];
+     
+    Person *Yenarae = [[Person alloc]init];
+    Yenarae.s_ID = @"Yenarae";
+    Yenarae.s_Name = @"김예나래";
+    Yenarae.i_Picture = [UIImage imageNamed:@"Yenarae.jpg"];
+    */
+    
+    
     // Override point for customization after application launch.
+    //MainViewController *MVC = [[MainViewController alloc] init];
+    //UINavigationController *UINC = [[UINavigationController alloc] initWithRootViewController:MVC];
+    //[self.window addSubview:UINC.view];
+    //[self.window makeKeyAndVisible];
     return YES;
 }
 							
