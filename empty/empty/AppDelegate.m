@@ -8,10 +8,18 @@
 
 #import "AppDelegate.h"
 
+const NSInteger ToolbarHeight = 44;
+const NSInteger MarginHeight = 7;
+const NSInteger MarginWidth = 7;
+
 @implementation AppDelegate
+-(void)application:(UIApplication*)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    NSLog(@"Device Token : %@",deviceToken);
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication]registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     [GMSServices provideAPIKey:@"AIzaSyA_bMr43CvaHdUg0hDwX9-sq6CrHU74W9A"];
     /*
     Person *Namse = [[Person alloc]init];

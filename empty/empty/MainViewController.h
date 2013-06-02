@@ -10,19 +10,34 @@
 #import "MonthViewController.h"
 #import "WeekViewController.h"
 #import "DayViewController.h"
+#import "AddTodoViewController.h"
 #import "DataBase.h"
-#import "SideView.h"
-@interface MainViewController  : UIViewController <ChildViewControllerDelegate>
+
+extern const NSInteger ToolbarHeight;
+
+@protocol MotherViewControllerDelegate <NSObject>
+-(void)slideViews;
+@end
+
+@interface MainViewController  : UIViewController <MainViewControllerDelegate>
 {
+
     UIToolbar *firToolbar;
     UIToolbar *secToolbar;
+    UIToolbar *naviToolbar;
     MonthViewController *MVC;
     WeekViewController *WVC;
     DayViewController *DVC;
     NSDateComponents *nowComps;
     DataBase *DB;
-    SideView *sideView;
+    UITapGestureRecognizer *tapGesture;
 }
 -(id)initWithDB:(DataBase*)_DB;
+@property (assign) id <MotherViewControllerDelegate> motherViewControllerDelegate;
 @property(nonatomic, strong)DataBase *DB;
+@property(nonatomic, strong)UITapGestureRecognizer *tapGesture;
+-(void)addTap;
+-(void)removeTap;
+-(void)showDetialViewControllerWithDetailVC:(DetailViewController *)_DetailVC;
+
 @end

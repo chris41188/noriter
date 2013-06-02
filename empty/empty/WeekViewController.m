@@ -12,10 +12,10 @@
 @synthesize TVC;
 @synthesize DB;
 #define TVC_W_P 1
-#define TVC_H_P 0.5
+#define TVC_H_P 0.0
 
 #define SVC_W_P 1.0/7.0
-#define SVC_H_P 0.5
+#define SVC_H_P 1.0/3.0*4.0
 
 #define STD_W self.view.frame.size.width
 #define STD_H self.view.frame.size.height
@@ -75,6 +75,7 @@
         NSDateComponents *offsetComps = [[NSDateComponents alloc] init];
         [offsetComps setDay:-[nowDateComps weekday]+1+i];
         NSDateComponents *dateComps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[[NSCalendar currentCalendar] dateByAddingComponents:offsetComps toDate:[NSDate date] options:0]];
+        NSLog(@"%d , %d",[dateComps month], [dateComps day]);
         [SVC setDataWithMonth:[dateComps month] Day:[dateComps day]];
     }
 }

@@ -22,5 +22,5 @@
 -(NSArray*)getSchedulesWithMonth:(NSInteger)month Day:(NSInteger)day;
 -(Schedule*)getScheduleWithMonth:(NSInteger)month Day:(NSInteger)day Index:(NSInteger)index;
 -(NSArray*)getSchedulesWithMonth:(NSInteger)month;
-
+-(id)initWithOwner:(Person*)_owner;
 @end

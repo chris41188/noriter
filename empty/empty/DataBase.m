@@ -32,22 +32,22 @@
 @synthesize title;
 @synthesize owner;
 @synthesize array;
--(id)init //random
+-(id)initWithOwner:(Person*)_owner //random
 {
     if(self = [super init])
     {
-
+        owner = _owner;
         
         NSLog(@"Data Base Init");
         int i,l,o,C;
-        title = @"NamSE의 IOS";
+        title = [NSString stringWithFormat:@"%@의 IOS",_owner.s_ID];;
         NSArray *content = [NSArray arrayWithObjects:@"밥먹겠습니다. 밥먹을거에요 밥먹자 밥 그래 밥밥밥 바라밥바 밥밥! 바라발바ㅏ바바밥 \n바바바르아르베밥 디너 브레이크퍼스트 런치! 야 씩 은 치 킨!!", @"오늘은\n    회사에\n       가는날    ! @ ! *&^$#@", @"잠잘겁니다. 오늘 잘게요. 잘자요 사요나라 ^^" ,nil];
         array = [[NSMutableArray alloc]init];
         
         //MockData
         for(i=1;i<=12;i++)
         {
-            if(i==1||i==3||i==4||i==7||i==8||i==10||i==12) C = 1;
+            if(i==1||i==3||i==5||i==7||i==8||i==10||i==12) C = 1;
             else if(i!=2) C = 0;
             else C = -1;
             NSMutableArray *Month = [[NSMutableArray alloc]init];

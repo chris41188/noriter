@@ -29,10 +29,20 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+- (void) tableView: (UITableView *) tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Will begin Edit");
+}
+
+- (void) tableView: (UITableView *) tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"did Highlight");
+}
 - (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
 {
     DetailViewController *DetailVC = [[DetailViewController alloc]initWithSchedule:[DB getScheduleWithMonth:month Day:day Index:indexPath.row]];
-    [self.delegate ChangeViewControllwerWithDetailVC:DetailVC];
+    [self.mainViewControllerDelegate showDetialViewControllerWithDetailVC:DetailVC];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,7 +63,6 @@
     return [DB getSchedulesWithMonth:month Day:day].count;
     
 }
-
 - (TableCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TableCell *cell = [[TableCell alloc]init];
@@ -62,7 +71,6 @@
     cell.schedule = [DB getScheduleWithMonth:month Day:day Index:indexPath.row];
     cell.textLabel.text = cell.schedule.s_Content;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d시 -> %d시",cell.schedule.dc_StartDateComp.hour,cell.schedule.dc_EndDateComp.hour];
-    
     return cell;
 }
 

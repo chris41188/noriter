@@ -4,68 +4,42 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "empty/DetailViewController.m"
-         timestampString = "390719469.753207"
+         filePath = "empty/MotherViewController.m"
+         timestampString = "391878907.439128"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "145"
-         endingLineNumber = "145"
-         landmarkName = "-initContentView"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
+         landmarkName = "-initMainViewControllerWithOwner:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "empty/DetailViewController.m"
-         timestampString = "390719469.753207"
+         filePath = "empty/FriendPopupView.m"
+         timestampString = "391878989.589104"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
-         landmarkName = "-initContentView"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
+         landmarkName = "-showCalendar"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "empty/DetailViewController.m"
-         timestampString = "390719469.753207"
+         filePath = "empty/MotherViewController.m"
+         timestampString = "391879212.725924"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "163"
-         endingLineNumber = "163"
-         landmarkName = "-initContentView"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "empty/DetailViewController.m"
-         timestampString = "390719469.753207"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "162"
-         endingLineNumber = "162"
-         landmarkName = "-initContentView"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "empty/DetailViewController.m"
-         timestampString = "390719469.753207"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "164"
-         endingLineNumber = "164"
-         landmarkName = "-initContentView"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
+         landmarkName = "-slideViews"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Person.h"
-@protocol ChildViewControllerDelegate <NSObject>
-- (void)SlideMainView;
-@end
-@interface SideView : UIView
+#import "FriendsListViewController.h"
+
+@interface SideViewController : UIViewController
 {
     NSInteger ToolbarHeight;
+    FriendsListViewController *FLVC;
     Person *owner;
 }
 @property NSInteger ToolbarHeight;
 - (id)initWithFrame:(CGRect)frame ToolbarHeight:(NSInteger)height Onwer:(Person*)_owner;
--(void)slide;
+@property (assign) id <MotherViewControllerDelegate> motherViewControllerDelegate;
 @end

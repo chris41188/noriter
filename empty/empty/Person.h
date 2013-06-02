@@ -14,10 +14,12 @@
     NSString *s_Name;
     NSString *s_ID;
     NSMutableArray *ma_DBs;
+    NSMutableArray *ma_Friends;
 }
 -(id)init;
 @property (nonatomic, strong) UIImage *i_Picture;
 @property (nonatomic, strong) NSString *s_Name;
 @property (nonatomic, strong) NSString *s_ID;
 @property (nonatomic, strong) NSMutableArray *ma_DBs;
+@property (nonatomic, strong) NSMutableArray *ma_Friends;
 @end

@@ -50,7 +50,7 @@
 
 +(NSString*)getDateWithDateComp:(NSDateComponents *)DC
 {
-    return [NSString stringWithFormat:@"%d/%d/%d(%@) %2d:%.2d"
+    return [NSString stringWithFormat:@"%d / %d / %d(%@) %2d : %.2d"
             ,DC.year, DC.month, DC.day, [Schedule getWeekDaySymbolWithWeekday:[Schedule getWeekdayWithDateComps:DC]], DC.hour, DC.minute];
 }
 

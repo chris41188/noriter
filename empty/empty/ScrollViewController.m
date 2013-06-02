@@ -42,14 +42,20 @@
 {
     UIView *piece = [gestureRecognizer view];
     CGPoint coord = [gestureRecognizer locationInView:[piece superview]];
-    [TVC setDataWithMonth:month Day:day];
+    static int pre_month = 0, pre_day = 0;
+    if(pre_month != month || pre_day != day)
+    {
+        [TVC setDataWithMonth:month Day:day];
+    }
     int tableRow = [self hitTest:coord];
+    NSLog(@"%d",tableRow);
     if(tableRow != -1)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:tableRow inSection:0];
         [TVC.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         [TVC.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     }
+    pre_day = day, pre_month = month;
 }
 -(NSInteger)hitTest:(CGPoint)point
 {

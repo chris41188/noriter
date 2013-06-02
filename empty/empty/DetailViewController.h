@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Schedule.h"
 #import "Comment.h"
+#import "AddTodoViewController.h"
+extern const NSInteger ToolbarHeight;
 @interface DetailViewController : UIViewController
 {
     Schedule *schedule;
@@ -26,6 +28,7 @@
     UILabel *commentAndShareLabel; // comment and share label
     NSMutableArray *commentViewArray;
     
+    UIToolbar *naviToolbar;
 }
 -(id)initWithSchedule:(Schedule*)_sche;
 @property (nonatomic, strong) Schedule *schedule;

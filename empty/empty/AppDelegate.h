@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+extern const NSInteger ToolbarHeight;
+extern const NSInteger MarginHeight;
+extern const NSInteger MarginWidth;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

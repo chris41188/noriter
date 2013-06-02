@@ -21,7 +21,6 @@
 #define PERIOD_LABEL_FRAME CGRectMake(60,40,250,0)
 #define CONT_LABEL_FRAME CGRectMake(MARGIN_WIDTH*2,85,290,0)
 #define PIC_IMAGE_FRAME CGRectMake(MARGIN_WIDTH,MARGIN_HEIGHT,320-MARGIN_WIDTH*2,250)
-
 -(id)initWithSchedule:(Schedule *)_sche
 {
     self = [super init];
@@ -33,7 +32,7 @@
 }
 -(void)viewDidAppear:(BOOL)animated
 {
-    [self.view.layer setBackgroundColor:[UIColor whiteColor].CGColor];
+    [self.view.layer setBackgroundColor:[UIColor grayColor].CGColor];
     [self initNaviItems];
     [self initContentView];
     NSLog(@"%@",schedule.p_Writter.s_Name);
@@ -51,7 +50,7 @@
     
     // init contentView
     
-    contentView = [[UIScrollView alloc]initWithFrame:self.view.frame];
+    contentView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, ToolbarHeight, self.view.frame.size.width, self.view.frame.size.height - ToolbarHeight)];
     [self.view addSubview:contentView];
     
     
@@ -210,9 +209,10 @@
         _view.layer.borderColor = [UIColor redColor].CGColor;
         _view.layer.borderWidth = 1.0f;
     }
-    /*contentView.layer.borderColor = [UIColor redColor].CGColor;
+    
+    contentView.layer.borderColor = [UIColor redColor].CGColor;
     contentView.layer.borderWidth = 1.0f;
-    profImageView.layer.borderColor = [UIColor redColor].CGColor;
+    /*profImageView.layer.borderColor = [UIColor redColor].CGColor;
     profImageView.layer.borderWidth = 1.0f;
     nameLabel.layer.borderColor = [UIColor redColor].CGColor;
     nameLabel.layer.borderWidth = 1.0f;
@@ -228,9 +228,25 @@
     
     
 }
+-(void)showAddTodoController
+{
+    AddTodoViewController *ATVC = [[AddTodoViewController alloc]init];
+    [self presentViewController:ATVC animated:YES completion:nil ];
+}
 -(void)initNaviItems
 {
     NSLog(@"Setting Navi Imtes");
+    
+    if([self.view.subviews indexOfObject:naviToolbar] != NSNotFound)
+    {
+        NSLog(@"Already has Navigation Toolbar");
+        return;
+    }
+    NSLog(@"Setting Navigation Toolbar");
+    naviToolbar = [[UIToolbar alloc]init];
+    naviToolbar.frame = CGRectMake(0,0,self.view.frame.size.width,ToolbarHeight);
+    naviToolbar.tintColor = [UIColor grayColor];
+    
     
     //left
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -239,7 +255,6 @@
     [backButton setImage:backImage forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [self.navigationItem setLeftBarButtonItem:backBarButton];
     
     
     //right
@@ -252,13 +267,20 @@
     UIImage *addImage = [UIImage imageNamed:@"ic_addtodo.png"];
     [addButton setFrame:CGRectMake(0, 0, 30, 30)];
     [addButton setImage:addImage forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(showAddTodoController) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *addBarButton = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     
-    [self.navigationItem setRightBarButtonItems:[[NSArray alloc] initWithObjects:addBarButton,briefBarButton, nil] animated:YES];
+    [naviToolbar setItems:[[NSArray alloc] initWithObjects:backBarButton, addBarButton,briefBarButton, nil] animated:YES];
+    [self.view addSubview:naviToolbar];
+    
+    
+    //[self.navigationItem setLeftBarButtonItem:backBarButton];
+    
+    //[self.navigationItem setRightBarButtonItems:[[NSArray alloc] initWithObjects:addBarButton,briefBarButton, nil] animated:YES];
 }
 -(void)popNavi
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)viewDidLoad
 {

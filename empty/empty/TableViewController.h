@@ -10,16 +10,15 @@
 #import "DataBase.h"
 #import "TableCell.h"
 #import "DetailViewController.h"
-#import "NavigationController.h"
-@protocol ChildViewControllerDelegate <NSObject>
-- (void)ChangeViewControllwerWithDetailVC:(DetailViewController*)_DetailVC;
+@protocol MainViewControllerDelegate <NSObject>
+- (void)showDetialViewControllerWithDetailVC:(DetailViewController*)_DetailVC;
 @end
 @interface TableViewController : UITableViewController <UITableViewDelegate>
 {
     DataBase *DB;
     NSInteger month, day;
 }
-@property (assign) id <ChildViewControllerDelegate> delegate;
+@property (assign) id <MainViewControllerDelegate> mainViewControllerDelegate;
 @property (nonatomic, strong)DataBase *DB;
 -(void)setDataWithMonth:(NSInteger)_month Day:(NSInteger)_day;
 +(TableViewController*)makeChildTVCByParent:(UIViewController*)parent DB:(DataBase*)_DB frame:(CGRect)rect;

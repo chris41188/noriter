@@ -10,7 +10,7 @@
 
 @implementation MainViewController
 @synthesize DB;
-#define TOOLBAR_HEIGHT 44
+@synthesize tapGesture;
 
 -(id)initWithDB:(DataBase *)_DB
 {
@@ -18,23 +18,18 @@
     if(self)
     {
         DB = _DB;
+        //const NSInteger ToolbarHeight = 44;
+
     }
     return self;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
-    Person *Namse = [[Person alloc]init];
-    Namse.s_ID = @"skatpgus";
-    Namse.s_Name = @"남세현";
-    Namse.i_Picture = [UIImage imageNamed:@"Namse.jpg"];
-    DataBase *_DB = [DataBase alloc];
-    _DB.owner = Namse;
-    _DB = [_DB init];
-    DB = _DB;
+    
     
     nowComps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[NSDate date]];
     
-    
+    [self initTap];
     [self initNaviItems];
     [self initfirToolbar];
     [self initsecToolbar];
@@ -78,13 +73,13 @@
     }
     
     NSLog(@"Setting DVC");
-    DVC = [[DayViewController alloc]initWithDB:DB Frame:CGRectMake(0,TOOLBAR_HEIGHT*2, self.view.frame.size.width, self.view.frame.size.height-TOOLBAR_HEIGHT*2)];
+    DVC = [[DayViewController alloc]initWithDB:DB Frame:CGRectMake(0,ToolbarHeight*3, self.view.frame.size.width, self.view.frame.size.height-ToolbarHeight*3)];
     [self addChildViewController:DVC];
     [self.view addSubview:DVC.view];
     [DVC didMoveToParentViewController:self];
     [DVC setDateWithMonth:[nowComps month] Day:[nowComps day]];
     [DVC.view setHidden:YES];
-    DVC.TVC.delegate = self;
+    DVC.TVC.mainViewControllerDelegate = self;
 }
 -(void)initWVC
 {
@@ -95,13 +90,13 @@
     }
     
     NSLog(@"Setting WVC");
-    WVC = [[WeekViewController alloc]initWithDB:DB Frame:CGRectMake(0,TOOLBAR_HEIGHT*2, self.view.frame.size.width, self.view.frame.size.height-TOOLBAR_HEIGHT*2)];
+    WVC = [[WeekViewController alloc]initWithDB:DB Frame:CGRectMake(0,ToolbarHeight*3, self.view.frame.size.width, self.view.frame.size.height-ToolbarHeight*3)];
     [self addChildViewController:WVC];
     [self.view addSubview:WVC.view];
     [WVC didMoveToParentViewController:self];
     [WVC setDateWithMonth:[nowComps month] Day:[nowComps day]];
     [WVC.view setHidden:YES];
-    WVC.TVC.delegate = self;
+    WVC.TVC.mainViewControllerDelegate = self;
 }
 -(void)initMVC
 {
@@ -112,22 +107,28 @@
     }
     
     NSLog(@"Setting MVC");
-    MVC = [[MonthViewController alloc]initWithDB:DB Frame:CGRectMake(0,TOOLBAR_HEIGHT*2, self.view.frame.size.width, self.view.frame.size.height-TOOLBAR_HEIGHT*2)];
+    MVC = [[MonthViewController alloc]initWithDB:DB Frame:CGRectMake(0,ToolbarHeight*3, self.view.frame.size.width, self.view.frame.size.height-ToolbarHeight*3)];
     [self addChildViewController:MVC];
     [self.view addSubview:MVC.view];
     [MVC didMoveToParentViewController:self];
     [MVC setDateWithMonth:[nowComps month]];
     [MVC.view setHidden:YES];
-    MVC.TVC.delegate = self;
+    MVC.TVC.mainViewControllerDelegate = self;
 }
--(void)ChangeViewControllwerWithDetailVC:(DetailViewController *)_DetailVC
+-(void)showDetialViewControllerWithDetailVC:(DetailViewController *)_DetailVC
 {
     _DetailVC.title = self.title;
-    [self.navigationController pushViewController:_DetailVC animated:YES];
+    [self presentViewController:_DetailVC animated:YES completion:nil ];
 }
+-(void)showAddTodoController
+{
+    AddTodoViewController *ATVC = [[AddTodoViewController alloc]init];
+    [self presentViewController:ATVC animated:YES completion:nil ];
+}
+
 -(void)setDateViewerWithString:(NSString *)string
 {
-    UIBarButtonItem *UIBBI = [[secToolbar items] objectAtIndex:0];
+    UIBarButtonItem *UIBBI = [[naviToolbar items] objectAtIndex:0];
     UIButton *dateButton = (UIButton*)UIBBI.customView;
     [dateButton setTitle:string forState:UIControlStateNormal];
     
@@ -141,8 +142,8 @@
     }
     NSLog(@"Setting Second Toolbar");
     secToolbar = [[UIToolbar alloc]init];
-    secToolbar.frame = CGRectMake(0,TOOLBAR_HEIGHT,self.navigationController.navigationBar.frame.size.width,TOOLBAR_HEIGHT);
-    secToolbar.tintColor = [UIColor whiteColor];
+    secToolbar.frame = CGRectMake(0,ToolbarHeight*2,self.view.frame.size.width,ToolbarHeight);
+    secToolbar.tintColor = [UIColor grayColor];
     
     UIButton *dateButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [dateButton setFrame:CGRectMake(0, 0, 100, 30)];
@@ -192,13 +193,14 @@
     
     NSLog(@"Setting First Toolbar");
     firToolbar = [[UIToolbar alloc]init];
-    firToolbar.frame = CGRectMake(0, 0, self.navigationController.navigationBar.frame.size.width, TOOLBAR_HEIGHT);
+    firToolbar.frame = CGRectMake(0, ToolbarHeight, self.view.frame.size.width, ToolbarHeight);
     firToolbar.tintColor = [UIColor grayColor];
     
     UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *addImage = [UIImage imageNamed:@"ic_addtodo.png"];
     [addButton setFrame:CGRectMake(0, 0, 30, 30)];
     [addButton setImage:addImage forState:UIControlStateNormal];
+    [addButton addTarget:self action:@selector(showAddTodoController) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *addBarButton = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     
     UIButton *dayButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -237,86 +239,55 @@
 
     [firToolbar setItems:[[NSArray alloc] initWithObjects:addBarButton,flexibleSpace,dayBarButton,flexibleSpace,weekBarButton,flexibleSpace,monthBarButton,flexibleSpace,handleBarButton, nil] animated:YES];
 }
--(void)slideSideView
-{
-    NSLog(@"Slide Side View");
-    
-    
-    if(sideView == nil)
-    {
-        CGRect newFrame = self.view.frame;
-        newFrame.size.width *= 0.75;
-        newFrame.origin.x -= 50;//newFrame.size.width;
-        //newFrame.origin.y -= self.navigationController.navigationBar.frame.size.height;
-        sideView = [[SideView alloc] initWithFrame:newFrame ToolbarHeight:self.navigationController.navigationBar.frame.size.height Onwer:DB.owner];
-        NSLog(@"side view is : %@",sideView);
-//        [self.view.superview addSubview:sideView];
-        UIViewController *VC = [[UIViewController alloc]init];
-        VC.view = sideView;
-        //[self.navigationController addChildViewController:VC];
-        //[self.view.superview insertSubview:sideView belowSubview:self.view];
-        [self.view addSubview:sideView];
-        NSLog(@"%@",self.view.superview);
-    }
-    //[sideView slide];
-    
-    [self SlideMainView];
-}
--(void)SlideMainView
-{
-    
-    CGRect destination = self.navigationController.view.frame;
-    
-    if (destination.origin.x > 0) {
-        destination.origin.x = 0;
-    } else {
-        destination.origin.x = sideView.frame.size.width;
-    }
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        
-        self.navigationController.view.frame = destination;
-        
-    } completion:^(BOOL finished) {
-        
-//        self.userInteractionEnabled = !(destination.origin.x > 0);
-        
-    }];
-}
+
 -(void)initNaviItems
 {
     NSLog(@"Setting navi items");
     
-    
-    [self setTitle:DB.title];
+    if([self.view.subviews indexOfObject:naviToolbar] != NSNotFound)
+    {
+        NSLog(@"Already has Navigation Toolbar");
+        return;
+    }
+    NSLog(@"Setting Navigation Toolbar");
+    naviToolbar = [[UIToolbar alloc]init];
+    naviToolbar.frame = CGRectMake(0,0,self.view.frame.size.width,ToolbarHeight);
+    naviToolbar.tintColor = [UIColor grayColor];
+
     
     // left
     UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *profileImage = [UIImage imageNamed:@"ic_profile.png"];
-    CGRect frame = CGRectMake(0, 0, 30,30);//self.navigationController.navigationBar.frame.size.height, self.navigationController.navigationBar.frame.size.height);
+    CGRect frame = CGRectMake(0, 0, 30,30);//self.view.frame.size.height, self.view.frame.size.height);
     [profileButton setFrame:frame];
     [profileButton setImage:profileImage forState:UIControlStateNormal];
-    [profileButton addTarget:self action:@selector(slideSideView) forControlEvents:UIControlEventTouchDown];
+    [profileButton addTarget:self.motherViewControllerDelegate action:@selector(slideViews) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem *profileBarButton = [[UIBarButtonItem alloc] initWithCustomView:profileButton];
-    [self.navigationItem setLeftBarButtonItems:[[NSArray alloc] initWithObjects:profileBarButton, nil] animated:YES];
+
+    
+    // Center : title
+    UILabel *profileNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0	, 0, 150, ToolbarHeight)];
+    profileNameLabel.text = DB.title;
+    UIBarButtonItem *profileNameBarButton = [[UIBarButtonItem alloc] initWithCustomView:profileNameLabel];
+    
     
     //right
     UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [menuButton setFrame:CGRectMake(0, 0, 30,30)];//self.navigationController.navigationBar.frame.size.height, self.navigationController.navigationBar.frame.size.height)];
+    [menuButton setFrame:CGRectMake(0, 0, 30,30)];//self.view.frame.size.height, self.view.frame.size.height)];
     [menuButton setImage:[UIImage imageNamed:@"ic_menu.png"] forState:UIControlStateNormal];
     UIBarButtonItem *menuBarButton = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
-    
     UIButton *briefButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [briefButton setFrame:CGRectMake(0, 0, 30,30)];//self.navigationController.navigationBar.frame.size.height, self.navigationController.navigationBar.frame.size.height)];
+    [briefButton setFrame:CGRectMake(0, 0, 30,30)];//self.view.frame.size.height, self.view.frame.size.height)];
     [briefButton setImage:[UIImage imageNamed:@"ic_brief.png"] forState:UIControlStateNormal];
     UIBarButtonItem *briefBarButton = [[UIBarButtonItem alloc] initWithCustomView:briefButton];
     
-    /*UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
      initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
      target:nil
      action:nil];
-     */
-    [self.navigationItem setRightBarButtonItems:[[NSArray alloc] initWithObjects:menuBarButton,briefBarButton, nil] animated:YES];
+    
+    [self.view addSubview:naviToolbar];
+    [naviToolbar setItems:[[NSArray alloc] initWithObjects:profileBarButton,flexibleSpace,profileNameBarButton,flexibleSpace,briefBarButton,flexibleSpace,menuBarButton, nil] animated:YES];
     
 }
 - (void)didReceiveMemoryWarning
@@ -325,6 +296,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
+-(void)initTap
+{
+    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self.motherViewControllerDelegate action:@selector(touchedMainView:)];
+    [tapGesture setNumberOfTapsRequired:1];
+    tapGesture.delegate = (id)self.view;
+}
+-(void)addTap
+{
+    [self.view addGestureRecognizer:tapGesture];
+    for (UIView* _view in self.view.subviews) {
+        _view.userInteractionEnabled = NO;
+    }
+}
+-(void)removeTap
+{
+    [self.view removeGestureRecognizer:tapGesture];
+    for (UIView* _view in self.view.subviews) {
+        _view.userInteractionEnabled = YES;
+    }
+}
 @end

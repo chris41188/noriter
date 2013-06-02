@@ -13,12 +13,14 @@
 @synthesize s_Name;
 @synthesize s_ID;
 @synthesize ma_DBs;
+@synthesize ma_Friends;
 -(id)init
 {
     self = [super init];
     if(self)
     {
         ma_DBs = [[NSMutableArray alloc] init];
+        ma_Friends = [[NSMutableArray alloc]init];
     }
     return self;
 }

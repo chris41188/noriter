@@ -21,7 +21,7 @@
         
         self.layer.borderColor = [UIColor redColor].CGColor;
         self.layer.borderWidth = 1.0f;
-        self.layer.backgroundColor = [UIColor whiteColor].CGColor;
+        self.layer.backgroundColor = [UIColor grayColor].CGColor;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gesturePiece:)];
         [tapGesture setNumberOfTapsRequired:1];
         [self addGestureRecognizer:tapGesture];
