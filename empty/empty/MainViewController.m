@@ -19,10 +19,74 @@
     {
         DB = _DB;
         //const NSInteger ToolbarHeight = 44;
+        
+        
+        
+        
+        
+        
+        
+        ////###
+        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:@"xvz1evFS4wEEPTGEFPHBog"
+                                                        secret:@"L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg"];
+        
+        NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
+        
+        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+                                                                       consumer:consumer
+                                                                          token:nil   // we don't have a Token yet
+                                                                          realm:nil   // our service provider doesn't specify a realm
+                                                              signatureProvider:nil]; // use the default method, HMAC-SHA1
+        
+        [request setHTTPMethod:@"POST"];
+        
+        OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+        
+        [fetcher fetchDataWithRequest:request
+                             delegate:self
+                    didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
+                      didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
+        
+        
+        
+        
+        ///###
+        
+        
+        
+        
+        
+        
+        
+        
 
     }
     return self;
 }
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
+    NSLog(@"requestTokenTicket");
+    if (ticket.didSucceed) {
+        NSString *responseBody = [[NSString alloc] initWithData:data
+                                                       encoding:NSUTF8StringEncoding];
+        requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
+    }
+}
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSData *)error {
+    NSLog(@"error");
+    if (ticket.didSucceed) {
+        NSString *responseBody = [[NSString alloc] initWithData:error
+                                                       encoding:NSUTF8StringEncoding];
+        requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
+    }
+}
+
+
+
+
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
     

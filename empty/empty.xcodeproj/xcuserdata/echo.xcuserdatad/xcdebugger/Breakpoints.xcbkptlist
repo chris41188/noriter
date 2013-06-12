@@ -7,39 +7,39 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "empty/MotherViewController.m"
-         timestampString = "391878907.439128"
+         filePath = "empty/PHTextField.m"
+         timestampString = "392551008.027631"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "55"
-         endingLineNumber = "55"
-         landmarkName = "-initMainViewControllerWithOwner:"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
+         landmarkName = "-textViewDidEndEditing:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "empty/FriendPopupView.m"
-         timestampString = "391878989.589104"
+         filePath = "empty/PHTextField.m"
+         timestampString = "392551014.17962"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "25"
+         endingLineNumber = "25"
+         landmarkName = "-textViewDidBeginEditing:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "empty/PHTextField.m"
+         timestampString = "392551015.338807"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "54"
          endingLineNumber = "54"
-         landmarkName = "-showCalendar"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "empty/MotherViewController.m"
-         timestampString = "391879212.725924"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
-         landmarkName = "-slideViews"
+         landmarkName = "-textViewDidChange:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

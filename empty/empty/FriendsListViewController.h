@@ -17,6 +17,8 @@
     bool isPoped;
     FriendPopupView *friendPopupView;
     UITapGestureRecognizer *tap;
+    UISearchBar *searchBar;
+    bool isSearching;
 }
 @property (strong, nonatomic) Person *owner;
 @property (strong, nonatomic)     FriendPopupView *friendPopupView;

@@ -6,6 +6,11 @@
 //  Copyright (c) 2013년 echo. All rights reserved.
 //
 
+#import "OAConsumer.h"
+#import "OAMutableURLRequest.h"
+#import "OADataFetcher.h"
+#import "OAToken.h"
+
 #import <UIKit/UIKit.h>
 #import "MonthViewController.h"
 #import "WeekViewController.h"
@@ -21,7 +26,9 @@ extern const NSInteger ToolbarHeight;
 
 @interface MainViewController  : UIViewController <MainViewControllerDelegate>
 {
-
+    OAToken *requestToken;
+    
+    
     UIToolbar *firToolbar;
     UIToolbar *secToolbar;
     UIToolbar *naviToolbar;

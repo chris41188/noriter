@@ -20,6 +20,8 @@
     float f_Longitude;
     NSString *s_Address;
     Person *p_Writter;
+    
+    //add 'title'
 }
 
 -(id)init;

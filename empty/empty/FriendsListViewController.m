@@ -20,6 +20,12 @@
         owner = _owner;
         isPoped = false;
         
+        searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        self.tableView.tableHeaderView = searchBar;
+        isSearching = NO;
+        searchBar.layer.borderColor = [UIColor redColor].CGColor;
+        searchBar.layer.borderWidth = 1.0f;
+        
         self.view.layer.borderColor = [UIColor redColor].CGColor;
         self.view.layer.borderWidth = 1.0f;
     }
