@@ -39,6 +39,7 @@
 	{
 		self.key = @"";
 		self.secret = @"";
+        self.verifier = @"";
 	}
     return self;
 }
@@ -49,6 +50,7 @@
 	{
 		self.key = aKey;
 		self.secret = aSecret;
+        self.verifier = @"";
 	}
 	return self;
 }
@@ -65,6 +67,8 @@
 				self.key = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 			} else if ([[elements objectAtIndex:0] isEqualToString:@"oauth_token_secret"]) {
 				self.secret = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			} else if ([[elements objectAtIndex:0] isEqualToString:@"oauth_verifier"]) {
+				self.verifier = [[elements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 			}
 		}
 	}    
@@ -77,10 +81,12 @@
 	{
 		NSString *theKey = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
 		NSString *theSecret = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
+        NSString *theVerifier = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithFormat:@"OAUTH_%@_%@_VERIFIER", prefix, provider]];
 		if (theKey == NULL || theSecret == NULL)
 			return(nil);
 		self.key = theKey;
 		self.secret = theSecret;
+        self.verifier = theVerifier;
 	}
 	return self;
 }
@@ -92,6 +98,7 @@
 {
 	[[NSUserDefaults standardUserDefaults] setObject:self.key forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_KEY", prefix, provider]];
 	[[NSUserDefaults standardUserDefaults] setObject:self.secret forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_SECRET", prefix, provider]];
+	[[NSUserDefaults standardUserDefaults] setObject:self.secret forKey:[NSString stringWithFormat:@"OAUTH_%@_%@_VERIFIER", prefix, provider]];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	return(0);
 }

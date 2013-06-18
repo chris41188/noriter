@@ -26,6 +26,7 @@
         [self initFirstToolbar];
         [self initSecondToolbar];
         [self initFriendList];
+        
     }
     return self;
 }
@@ -41,33 +42,41 @@
 {
     NSLog(@"SideView : Init First Toolbar");
     
-    
-    UIToolbar *secondToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, ToolbarHeight, self.view.frame.size.width, ToolbarHeight)];
-    
+    UIView *secondToolbar = [[UIView alloc] initWithFrame:CGRectMake(0, ToolbarHeight, self.view.frame.size.width, ToolbarHeight)];
+    //UIToolbar *secondToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, ToolbarHeight, self.view.frame.size.width, ToolbarHeight)];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, ToolbarHeight)];
+    [backgroundImageView setImage:[UIImage imageNamed:@"03_back_02.png"]];
     
     UIButton *friendsListButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *friendsListImage = [UIImage imageNamed:@"ic_friendslist.png"];
     [friendsListButton setFrame:CGRectMake(0, 0, ToolbarHeight, ToolbarHeight)];
-    [friendsListButton setImage:friendsListImage forState:UIControlStateNormal];
-    //    [profilePictureChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchDown];
+    [friendsListButton setImage:[UIImage imageNamed:@"ic_friendslist.png"] forState:UIControlStateNormal];
+    //    [profilePictureChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *friendsListBarButton = [[UIBarButtonItem alloc] initWithCustomView:friendsListButton];
+        NSLog(@"%@",friendsListButton.imageView.image);
+    UIImageView *lineImageView_1 = [[UIImageView alloc]initWithFrame:CGRectMake(ToolbarHeight + 1, 0, 1, ToolbarHeight)];
+    [lineImageView_1 setImage:[UIImage imageNamed:@"03_lin_02.png"]];
     
     
     UIButton *chatListButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *chatListImage = [UIImage imageNamed:@"ic_chatlist.png"];
-    [chatListButton setFrame:CGRectMake(0, 0, ToolbarHeight, ToolbarHeight)];
-    [chatListButton setImage:chatListImage forState:UIControlStateNormal];
-    //    [profileInfoChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchDown];
+
+    [chatListButton setFrame:CGRectMake(ToolbarHeight + 2, 0, ToolbarHeight, ToolbarHeight)];
+    [chatListButton setImage:[UIImage imageNamed:@"ic_chatlist.png"] forState:UIControlStateNormal];
+    //    [profileInfoChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *chatListBarButton = [[UIBarButtonItem alloc] initWithCustomView:chatListButton];
+    
+    UIImageView *lineImageView_2 = [[UIImageView alloc]initWithFrame:CGRectMake(ToolbarHeight * 2 + 2, 0, 1, ToolbarHeight)];
+    [lineImageView_2 setImage:[UIImage imageNamed:@"03_lin_02.png"]];
     
     
     UIButton *searchListButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *searchListImage = [UIImage imageNamed:@"ic_search.png"];
-    [searchListButton setFrame:CGRectMake(0, 0, ToolbarHeight, ToolbarHeight)];
-    [searchListButton setImage:searchListImage forState:UIControlStateNormal];
-    //    [profileInfoChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchDown];
+    [searchListButton setFrame:CGRectMake(ToolbarHeight * 2 + 3, 0, ToolbarHeight, ToolbarHeight)];
+    [searchListButton setImage:[UIImage imageNamed:@"ic_search.png"] forState:UIControlStateNormal];
+    //    [profileInfoChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *searchListBarButton = [[UIBarButtonItem alloc] initWithCustomView:searchListButton];
     
+
+    UIImageView *lineImageView_3 = [[UIImageView alloc]initWithFrame:CGRectMake(ToolbarHeight * 3 + 3, 0, 1, ToolbarHeight)];
+    [lineImageView_3 setImage:[UIImage imageNamed:@"03_lin_02.png"]];
     
     
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
@@ -77,47 +86,60 @@
     
     
     [self.view addSubview:secondToolbar];
+    [secondToolbar addSubview:backgroundImageView];
+    [secondToolbar addSubview:friendsListButton];
+    [secondToolbar addSubview:chatListButton];
+    [secondToolbar addSubview:searchListButton];
+    [secondToolbar addSubview:lineImageView_1];
+    [secondToolbar addSubview:lineImageView_2];
+    [secondToolbar addSubview:lineImageView_3];
     
-    [secondToolbar setItems:[[NSArray alloc] initWithObjects: friendsListBarButton,chatListBarButton,searchListBarButton, nil] animated:YES];
+    //[secondToolbar setItems:[[NSArray alloc] initWithObjects: friendsListBarButton,chatListBarButton,searchListBarButton, nil] animated:YES];
 }
 
 -(void)initFirstToolbar
 {
     NSLog(@"SideView : Init First Toolbar");
     
+    UIView *firstToolbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, ToolbarHeight)];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, ToolbarHeight)];
+
+    [backgroundImageView setImage:[UIImage imageNamed:@"03_back_01.png"]];
     
-    UIToolbar *firstToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, ToolbarHeight)];
     
     UIButton *profilePictureChangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *profilePictureChangeImage = [UIImage imageNamed:@"ic_profilepicturechange.png"];
     [profilePictureChangeButton setFrame:CGRectMake(0, 0, ToolbarHeight, ToolbarHeight)];
-    [profilePictureChangeButton setImage:profilePictureChangeImage forState:UIControlStateNormal];
-    //    [profilePictureChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *ProfilePictureChangeBarButton = [[UIBarButtonItem alloc] initWithCustomView:profilePictureChangeButton];
+    [profilePictureChangeButton setImage:[UIImage imageNamed:@"03_ic_me.png"] forState:UIControlStateNormal];
+    //    [profilePictureChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    UILabel *profileNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(ToolbarHeight, 0, self.view.frame.size.width-ToolbarHeight*2, ToolbarHeight)];
+    UILabel *profileNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(ToolbarHeight + 7, 0, self.view.frame.size.width-ToolbarHeight*2, ToolbarHeight)];
     profileNameLabel.text = owner.s_Name;
-    UIBarButtonItem *profileNameBarButton = [[UIBarButtonItem alloc] initWithCustomView:profileNameLabel];
+    profileNameLabel.backgroundColor = [UIColor clearColor];
+    profileNameLabel.textColor = [UIColor whiteColor];
     
     
     UIButton *profileInfoEditButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *profileInfoEditImage = [UIImage imageNamed:@"ic_profileinfoedit"];
-    [profileInfoEditButton setFrame:CGRectMake(0, 0, ToolbarHeight, ToolbarHeight)];
-    [profileInfoEditButton setImage:profileInfoEditImage forState:UIControlStateNormal];
-    //    [profileInfoChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem *ProfileInfoEditBarButton = [[UIBarButtonItem alloc] initWithCustomView:profileInfoEditButton];
+
+    [profileInfoEditButton setFrame:CGRectMake(self.view.frame.size.width - ToolbarHeight, 0, ToolbarHeight, ToolbarHeight)];
+    [profileInfoEditButton setImage:[UIImage imageNamed:@"03_ic_edit.png"] forState:UIControlStateNormal];
+    //    [profileInfoChangeButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchUpInside];
     
+    UIImageView *lineImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width - ToolbarHeight - 1, 0, 1, ToolbarHeight)];
+    [lineImageView setImage:[UIImage imageNamed:@"03_lin_01.png"]];
     
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                       target:nil
                                       action:nil];
     
-    
     [self.view addSubview:firstToolbar];
+    [firstToolbar addSubview:backgroundImageView];
+    [firstToolbar addSubview:profilePictureChangeButton];
+    [firstToolbar addSubview:profileNameLabel];
+    [firstToolbar addSubview:profileInfoEditButton];
+    [firstToolbar addSubview:lineImageView];    
+//    [firstToolbar setItems:[[NSArray alloc] initWithObjects:ProfilePictureChangeBarButton,flexibleSpace,profileNameBarButton,flexibleSpace,ProfileInfoEditBarButton, nil] animated:YES];
     
-    [firstToolbar setItems:[[NSArray alloc] initWithObjects:ProfilePictureChangeBarButton,flexibleSpace,profileNameBarButton,flexibleSpace,ProfileInfoEditBarButton, nil] animated:YES];
 }
 /*
  // Only override drawRect: if you perform custom drawing.

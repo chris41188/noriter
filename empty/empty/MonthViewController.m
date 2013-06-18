@@ -12,9 +12,10 @@
 @implementation MonthViewController
 @synthesize TVC;
 @synthesize DB;
-#define sh self.view.frame.size.height/6*3
-#define h_n self.view.frame.size.height/6
-#define w_n self.view.frame.size.width/7
+@synthesize month;
+#define sh self.view.frame.size.height/6.0*3.0
+#define h_n self.view.frame.size.height/6.0
+#define w_n self.view.frame.size.width/7.0
 
 -(id)initWithDB:(DataBase*)_DB Frame:(CGRect)frame
 {
@@ -41,14 +42,39 @@
         {
             for(l=0;l<7;l++)
             {
-                MonthDayView* MDV = [[MonthDayView alloc] init];
-                MDV.frame = CGRectMake(l*w_n, i*h_n, w_n, h_n);
-                [arrMDV addObject:MDV];
-                [self.view addSubview:MDV];
-                [MDV setRow:i];
-                [MDV setCol:l];
+                //live Calendar//
+                if(i == 5 && l == 6)
+                {
+                    UIView *liveCalendarView = [[UIView alloc]initWithFrame:CGRectMake(l*w_n, i*h_n+1 , w_n-1, h_n-1) ];
+                    liveCalendarView.backgroundColor = [UIColor whiteColor];
+                    UIButton *liveCalendarButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                    [liveCalendarButton setImage:[UIImage imageNamed:@"01_ic_livecal_ios.png"] forState:UIControlStateNormal];
+                    
+                    [liveCalendarButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
+                    [liveCalendarButton setImage:[UIImage imageNamed:@"01_ic_livecal_c_ios.png"] forState:UIControlStateSelected];
+                    
+                    [liveCalendarButton setFrame:CGRectMake( (w_n-1 - 38 ) /2 , (h_n-1 - 50) / 2, 38, 50)];
+                    [liveCalendarView addSubview:liveCalendarButton];
+                    [self.view addSubview:liveCalendarView];
+                    [arrMDV addObject:liveCalendarView];
+                    
+                }
+                else
+                {
                 
-                [MDV setMVC:self];
+                    MonthDayView* MDV = [[MonthDayView alloc] init];
+                    //NSInteger A = l*w_n, B = i*h_n, C = w_n, D = h_n;
+                    //NSLog(@"int (i,l) = (%d,%d) ... A : %d B : %d C : %d D : %d",i,l,A,B,C,D);
+                    MDV.frame = CGRectMake(l*w_n, i*h_n+1 , w_n-1, h_n-1); /// this make border...!!
+                    //MDV.frame = CGRectMake(A, B, C, D);
+                    [arrMDV addObject:MDV];
+                    [self.view addSubview:MDV];
+                    [MDV setRow:i];
+                    [MDV setCol:l];
+                    
+                    [MDV setMVC:self];
+                }
+                
                 
             }
         }
@@ -56,6 +82,11 @@
     }
     return self;
 }
+- (void) onClick:(UIButton *)sender {
+    
+    [sender setSelected:!sender.selected];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -64,8 +95,9 @@
 {
 
 }
--(void)setDateWithMonth:(int)month
+-(void)setDateWithMonth:(int)_month
 {
+    month = _month;
     intActioning = 0;
     isOpen = false;
     int i=0,l=0;
@@ -77,13 +109,18 @@
     {
         for(l=0;l<7;l++)
         {
+            if(i == 5 && l == 6)
+            {
+                continue;
+            }
             MonthDayView* MDV = [arrMDV objectAtIndex:i*7+l];
-            
+            NSLog(@"%d",arrMDV.count);
             NSDateComponents *offsetComps = [[NSDateComponents alloc] init];
             [offsetComps setDay:-[nowDateComps weekday]+1+i*7+l];
             NSDateComponents *dateComps = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekdayCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:[[NSCalendar currentCalendar] dateByAddingComponents:offsetComps toDate:[[NSCalendar currentCalendar] dateFromComponents:nowDateComps] options:0]];
+            [MDV setDateComps:dateComps];
             
-            [MDV.label setText:[NSString stringWithFormat:@"%d/%d",[dateComps month],[dateComps day]]];
+            
             
         }
     }
@@ -91,7 +128,8 @@
 -(void)expandRow:(int)row Col:(int)col
 {
     NSLog(@"MonthDay touched row : %d / col : %d. \nisopen : %d , intActioning : %d",row,col,isOpen,intActioning);
-    int i,l;    
+    int i,l;
+    if(row == 5 && col == 6) return;
     if(isOpen == false && intActioning == 0) // it's mean, in this time will open.
     {
         preCol = col, preRow = row;
@@ -158,10 +196,10 @@
                 }
             }
             //and TVC do..
-            TVC.view.frame = CGRectMake(0, (1+row)*h_n, self.view.frame.size.width, 0);
+            TVC.view.frame = CGRectMake(0, (1+row)*h_n+1, self.view.frame.size.width, 0);
             [UIView animateWithDuration:0.3 animations:^(void) {
                 intActioning++; //NSLog(@"%d",intActioning);
-                TVC.view.frame = CGRectMake(0,(1+row)*h_n-(sh-(4-row)*h_n),self.view.frame.size.width,sh);
+                TVC.view.frame = CGRectMake(0,(1+row)*h_n-(sh-(4-row)*h_n)+1,self.view.frame.size.width,sh);
             } completion:^(BOOL finished) {
                 intActioning--; //NSLog(@"%d",intActioning);
             }];
@@ -323,7 +361,7 @@
             //and TVC do..
             [UIView animateWithDuration:0.3 animations:^(void) {
                 intActioning++; //NSLog(@"%d",intActioning);
-                TVC.view.frame = CGRectMake(0, (1+row)*h_n, self.view.frame.size.width, 0);
+                TVC.view.frame = CGRectMake(0, (1+row)*h_n+1, self.view.frame.size.width, 0);
             } completion:^(BOOL finished) {
                 intActioning--; //NSLog(@"%d",intActioning);
                 [TVC.view setHidden:YES];

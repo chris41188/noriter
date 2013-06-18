@@ -133,7 +133,7 @@
     dateButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     dateButton.frame = CGRectMake(0, 0, dateView.frame.size.width, ToolbarHeight);
     [dateButton setTitle:@"2013년 5월 31일 4시" forState:UIControlStateNormal];
-    
+    [dateButton addTarget:self action:@selector(dateButtonTouchDown) forControlEvents:UIControlEventTouchUpInside];
     [dateView addSubview:dateButton];
     hasEndDate = NO;
     NSLog(@"dateview : %@",dateView);
@@ -165,7 +165,7 @@
                                         MarginHeight,
                                         ToolbarHeight -  MarginWidth,
                                         ToolbarHeight -  MarginHeight);
-    [addTextDetailButton addTarget:self action:@selector(addTextContent) forControlEvents:UIControlEventTouchDown];
+    [addTextDetailButton addTarget:self action:@selector(addTextContent) forControlEvents:UIControlEventTouchUpInside];
     [textContentView addSubview:addTextDetailButton];
     NSLog(@"5 %f",textContentView.frame.origin.y);
     
@@ -217,6 +217,12 @@
     
     [self.view addSubview:optionView];
         [optionView setBackgroundColor:[UIColor grayColor]];
+}
+-(void)dateButtonTouchDown
+{
+    DateAddViewController *DAVC = [[DateAddViewController alloc]init];
+    //DAVC.AddtodoViewControllerDelegate = self;
+    [self presentViewController:DAVC animated:YES completion:nil ];
 }
 -(void) keyPressed: (NSNotification*) notification
 {

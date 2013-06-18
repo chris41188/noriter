@@ -71,7 +71,7 @@
     if(sideViewController == nil)
     {
         CGRect newFrame = self.view.frame;
-        newFrame.size.width *= 0.75;
+        newFrame.size.width *= 0.8;
         newFrame.origin.x = -newFrame.size.width;
         newFrame.origin.y = 0;
         sideViewController = [SideViewController alloc];

@@ -29,9 +29,11 @@
 @protected
 	NSString *key;
 	NSString *secret;
+    NSString *verifier;
 }
 @property(retain) NSString *key;
 @property(retain) NSString *secret;
+@property(retain) NSString *verifier;
 
 - (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret;
 - (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;

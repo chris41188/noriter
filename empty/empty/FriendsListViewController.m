@@ -23,11 +23,19 @@
         searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         self.tableView.tableHeaderView = searchBar;
         isSearching = NO;
-        searchBar.layer.borderColor = [UIColor redColor].CGColor;
-        searchBar.layer.borderWidth = 1.0f;
+        for (UIView *searchBarSubview in [searchBar subviews]) {
+            if ([searchBarSubview conformsToProtocol:@protocol(UITextInputTraits)]) {
+                    [(UITextField *)searchBarSubview setBorderStyle:UITextBorderStyleRoundedRect];
+            }
+        }
+        [searchBar setBackgroundImage:[UIImage imageNamed:@"03_back_list_fri.png"]];
         
-        self.view.layer.borderColor = [UIColor redColor].CGColor;
-        self.view.layer.borderWidth = 1.0f;
+        [searchBar setPositionAdjustment:UIOffsetMake(-9, 0) forSearchBarIcon:UISearchBarIconSearch];
+//        [searchBar setSearchTextPositionAdjustment:UIOffsetMake(-270, 0)];
+        
+        [self.view setBackgroundColor:[UIColor colorWithRed:0.13 green:0.13 blue:0.13 alpha:1]];
+        self.tableView.separatorColor = [UIColor clearColor];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
 }
@@ -81,6 +89,30 @@
 
 #pragma mark - Table view data source
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    // create and return a custom UIView to use for the section here
+    UIView *sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 25)];
+    UIImageView *backgroundImageView =[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"03_back_list_category.png"]];
+    backgroundImageView.frame = sectionView.frame;
+    [sectionView addSubview:backgroundImageView];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, self.view.frame.size.width-2, 25)];
+    titleLabel.numberOfLines = 1;
+    titleLabel.textColor = [UIColor colorWithRed:0.933 green:0.933 blue:0.933 alpha:1];
+    titleLabel.font = [UIFont systemFontOfSize:13];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    NSLog(@"SEction = %d",section);
+    if(section == 0)
+    {
+        titleLabel.text = @"그룹 & 즐겨찾기";
+    }
+    
+//    [titleLabel sizeToFit];
+    [sectionView addSubview:titleLabel];
+    
+    return sectionView;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.

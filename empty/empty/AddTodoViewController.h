@@ -14,6 +14,7 @@
 #import "FlexibleView.h"
 #import "PictureAddViewController.h"
 #import "PHTextField.h"
+#import "DateAddViewController.h"
 extern const NSInteger ToolbarHeight;
 extern const NSInteger MarginHeight;
 extern const NSInteger MarginWidth;

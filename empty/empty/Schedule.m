@@ -97,6 +97,23 @@
      }*/
 }
 
+/*
++(NSInteger)getWeekWithDay:(NSInteger)_day Weekday:(NSInteger)_weekday
+{
+    int day = _day, weekday = _weekday;
+    int week = 1;
+    for( ; day>1; day--)
+    {
+        if(weekday - 1 < 0)
+        {
+            weekday = 6;
+            week++;
+        }
+        else weekday--;
+    }
+    return 
+}*/
+
 +(NSString*)getWeekDaySymbolWithWeekday:(int)weekday
 {
     return [[[NSDateFormatter alloc] shortWeekdaySymbols]objectAtIndex:weekday];

@@ -20,7 +20,7 @@
         exitButton.frame = CGRectMake(self.frame.size.width - 44 - 8, 8, 44, 44);
         [exitButton setTitle:@"exit" forState:UIControlStateNormal];
         //[exitButton setImage:[UIImage imageNamed:@"ic_exit"] forState:UIControlStateNormal];
-        [exitButton addTarget:self.friendListViewControllerDelegate action:@selector(popDown) forControlEvents:UIControlEventTouchDown];
+        [exitButton addTarget:self.friendListViewControllerDelegate action:@selector(popDown) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:exitButton];
         
         
@@ -33,7 +33,7 @@
         UIButton *showCalendarButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         showCalendarButton.frame = CGRectMake(self.frame.size.width/2, self.frame.size.height/4*3, self.frame.size.width/2, self.frame.size.height/4);
         [showCalendarButton setTitle:@"ShowCal." forState:UIControlStateNormal];
-        [showCalendarButton addTarget:self action:@selector(showCalendar) forControlEvents:UIControlEventTouchDown];
+        [showCalendarButton addTarget:self action:@selector(showCalendar) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:showCalendarButton];
         
         

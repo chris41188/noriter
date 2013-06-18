@@ -20,10 +20,16 @@
     BOOL isOpen;
     TableViewController *TVC;
     NSDateComponents *nowDateComps;
+    NSInteger month;
+    
+    int sh;
+    int h_n;
+    int w_n;
 }
+@property (nonatomic) NSInteger month;
 @property (nonatomic, strong)TableViewController *TVC;
 @property (nonatomic, strong)DataBase *DB;
 -(id)initWithDB:(DataBase*)_DB Frame:(CGRect)frame;
--(void)setDateWithMonth:(int)month;
+-(void)setDateWithMonth:(int)_month;
 -(void)expandRow:(int)row Col:(int)col;
 @end

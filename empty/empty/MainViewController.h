@@ -17,6 +17,7 @@
 #import "DayViewController.h"
 #import "AddTodoViewController.h"
 #import "DataBase.h"
+#import "Schedule.h"
 
 extern const NSInteger ToolbarHeight;
 
@@ -26,12 +27,14 @@ extern const NSInteger ToolbarHeight;
 
 @interface MainViewController  : UIViewController <MainViewControllerDelegate>
 {
-    OAToken *requestToken;
     
+    UIView *firToolbar;
+    //UIToolbar *firToolbar;
+    //UIToolbar *secToolbar;
+    UIView *secToolbar;
+    UIView *naviToolbar;
+    //UIToolbar *naviToolbar;
     
-    UIToolbar *firToolbar;
-    UIToolbar *secToolbar;
-    UIToolbar *naviToolbar;
     MonthViewController *MVC;
     WeekViewController *WVC;
     DayViewController *DVC;

@@ -253,7 +253,7 @@
     UIImage *backImage = [UIImage imageNamed:@"ic_back.png"];
     [backButton setFrame:CGRectMake(0, 0, 30, 30)];
     [backButton setImage:backImage forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchDown];
+    [backButton addTarget:self action:@selector(popNavi) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     
     
@@ -267,7 +267,7 @@
     UIImage *addImage = [UIImage imageNamed:@"ic_addtodo.png"];
     [addButton setFrame:CGRectMake(0, 0, 30, 30)];
     [addButton setImage:addImage forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(showAddTodoController) forControlEvents:UIControlEventTouchDown];
+    [addButton addTarget:self action:@selector(showAddTodoController) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *addBarButton = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     
     [naviToolbar setItems:[[NSArray alloc] initWithObjects:backBarButton, addBarButton,briefBarButton, nil] animated:YES];

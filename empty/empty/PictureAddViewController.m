@@ -48,7 +48,7 @@
     removeButton.frame = newFrame;
     removeButton.tag = [removeButtons count];
     [removeButtons addObject:removeButtons];
-    [removeButton addTarget:self action:@selector(removeImage:) forControlEvents:UIControlEventTouchDown];
+    [removeButton addTarget:self action:@selector(removeImage:) forControlEvents:UIControlEventTouchUpInside];
     */
     CGPoint coord = [self coordObjectWithIndex:[imageViews count]+1];
     newFrame.origin = CGPointMake(coord.x * componentSize.width, coord.y * componentSize.height);

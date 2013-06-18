@@ -57,6 +57,7 @@
         OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request
                                                                   response:response
                                                                 didSucceed:[(NSHTTPURLResponse *)response statusCode] < 400];
+        NSLog(@"%d",[(NSHTTPURLResponse *)response statusCode]);
         [delegate performSelector:didFinishSelector
                        withObject:ticket
                        withObject:responseData];

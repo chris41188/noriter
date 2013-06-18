@@ -42,7 +42,7 @@
     id<OASignatureProviding> signatureProvider;
     NSString *nonce;
     NSString *timestamp;
-	NSMutableDictionary *extraOAuthParameters;
+	NSMutableArray *extraOAuthParameters;
 }
 @property(readonly) NSString *signature;
 @property(readonly) NSString *nonce;
